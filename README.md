@@ -55,8 +55,8 @@ Conçu pour la validation de certification **NextFlutter (FlutterFire Summer Cam
 Clonez le dépôt et récupérez les dépendances :
 
 ```bash
-git clone <URL_DU_DEPOT>
-cd flutterfire_dart_challenge
+git clone https://github.com/jj-sedegnan/flutterfire-dart-challenge.git
+cd flutterfire-dart-challenge
 dart pub get
 ```
 
