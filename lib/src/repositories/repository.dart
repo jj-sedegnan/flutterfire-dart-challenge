@@ -31,4 +31,7 @@ abstract interface class Repository<T extends Entity> {
 
   /// Checks whether an item with [id] exists.
   bool exists(String id);
+
+  /// Streams updates of all items whenever the repository changes.
+  Stream<List<T>> watchAll();
 }

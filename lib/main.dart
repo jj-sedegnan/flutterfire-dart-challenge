@@ -369,6 +369,8 @@ class _MainScreenState extends State<MainScreen> {
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
+            margin: EdgeInsets.zero,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
@@ -381,21 +383,22 @@ class _MainScreenState extends State<MainScreen> {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 const CircleAvatar(
-                  radius: 26,
+                  radius: 20,
                   backgroundColor: Colors.white,
-                  child: Icon(Icons.inventory_2, color: Color(0xFF007AFF), size: 30),
+                  child: Icon(Icons.inventory_2, color: Color(0xFF007AFF), size: 22),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 8),
                 const Text(
                   'NextFlutter App',
-                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   'Total stock: ${_repository.count()} articles',
-                  style: const TextStyle(color: Colors.white70, fontSize: 12),
+                  style: const TextStyle(color: Colors.white70, fontSize: 11),
                 ),
               ],
             ),

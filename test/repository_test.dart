@@ -198,5 +198,71 @@ void main() {
         )),
       );
     });
+
+    test('13. fromJson and toJson serialization roundtrip', () {
+      final product = Product(
+        id: 'json-1',
+        name: 'Clavier Bluetooth',
+        price: 49.99,
+        stock: 10,
+        category: 'Accessoires',
+      );
+
+      final json = product.toJson();
+      expect(json['id'], equals('json-1'));
+      expect(json['name'], equals('Clavier Bluetooth'));
+      expect(json['price'], equals(49.99));
+      expect(json['stock'], equals(10));
+      expect(json['category'], equals('Accessoires'));
+
+      final parsed = Product.fromJson(json);
+      expect(parsed, equals(product));
+    });
+
+    test('14. fromJson triggers ValidationException on invalid values', () {
+      expect(
+        () => Product.fromJson({
+          'id': 'err-1',
+          'name': '',
+          'price': 10.0,
+          'stock': 5,
+        }),
+        throwsA(isA<ValidationException>()),
+      );
+    });
+  });
+
+  group('Reactive Stream Tests', () {
+    test('15. watchAll emits updated product list on add and delete', () async {
+      final repository = InMemoryRepository<Product>();
+      final emissions = <List<Product>>[];
+
+      final sub = repository.watchAll().listen(emissions.add);
+
+      final p1 = Product(
+        id: 'stream-1',
+        name: 'Stream Item',
+        price: 99.0,
+        stock: 3,
+        category: 'Test',
+      );
+
+      repository.add(p1);
+      // Allow microtask/stream event delivery
+      await Future<void>.delayed(Duration.zero);
+
+      expect(emissions.length, equals(1));
+      expect(emissions.first.length, equals(1));
+      expect(emissions.first.first.id, equals('stream-1'));
+
+      repository.delete('stream-1');
+      await Future<void>.delayed(Duration.zero);
+
+      expect(emissions.length, equals(2));
+      expect(emissions.last, isEmpty);
+
+      await sub.cancel();
+      repository.dispose();
+    });
   });
 }

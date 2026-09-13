@@ -58,6 +58,28 @@ class Product implements Entity {
     );
   }
 
+  /// Creates a [Product] from a JSON map.
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      id: json['id'] as String? ?? '',
+      name: json['name'] as String? ?? '',
+      price: (json['price'] as num?)?.toDouble() ?? -1.0,
+      stock: (json['stock'] as num?)?.toInt() ?? -1,
+      category: json['category'] as String? ?? 'Général',
+    );
+  }
+
+  /// Converts this [Product] into a JSON map.
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'price': price,
+      'stock': stock,
+      'category': category,
+    };
+  }
+
   @override
   String toString() =>
       'Product(id: $id, name: "$name", price: ${price.toStringAsFixed(2)}€, stock: $stock, category: "$category")';
